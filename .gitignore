@@ -8,3 +8,8 @@ dist/
 *.log
 .env
 .env.local
+# Defensive: msd/node-base entrypoint may create an empty lockfile at /app
+# on first start. We override entrypoint to avoid this, but ignore in case
+# someone runs `npm install` from /app inside the container.
+/package-lock.json
+/node_modules/

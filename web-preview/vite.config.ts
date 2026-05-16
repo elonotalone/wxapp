@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   server: {
-    host: "0.0.0.0",
+    host: "127.0.0.1",
     port: 3006,
     strictPort: true,
     // p3006.oceandino.com is reverse-proxied by Caddy to 127.0.0.1:3006,
