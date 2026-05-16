@@ -33,9 +33,20 @@ web-preview/     glass-easel + Vite 浏览器预览
 
 ## Production publish
 
-写完之后通过 `miniprogram-ci` 把 `src/` 上传到微信小程序后台
-（需配置上传密钥、ECS IP 白名单）。本仓库 web-preview 仅供 dev 期看效果，
-不参与微信平台发布。
+通过 OceanDino dashboard 的 **WxApp · 小程序 → Upload (体验版) / Submit (提审)** 按钮，
+后端会调 `miniprogram-ci` 把 `src/` 上传到微信小程序后台。一次性准备工作：
+
+1. 在 [mp.weixin.qq.com](https://mp.weixin.qq.com) 注册 appid。
+2. 开发 → 开发设置 → 小程序代码上传：生成上传密钥（下载
+   `.private.<appid>.key`），同页面把 ECS 出口 IP 加入白名单。
+3. Dashboard 的「凭据」卡片上传 appid + key 文件（AES-256-GCM 加密存
+   Supabase；运行时仅落到 ECS `/dev/shm` 内存盘，命令结束即删）。
+4. 把 `src/project.config.json` 里的占位 `"touristappid"` 改为真实 appid。
+
+完成后每次 ship 都是「点 Upload → 扫二维码」，**不需要打开微信开发者工具**。
+本仓库 `web-preview/` 永远只做 vibe coding 期浏览器预览，不参与微信平台发布。
+
+完整集成设计见 `oceandino/docs/work-logs/2026-05/miniprogram-ci-integration.md`。
 
 ## 不在此仓库做的事
 
